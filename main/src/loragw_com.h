@@ -57,7 +57,7 @@ typedef enum com_write_mode_e {
 /**
  *
 */
-int lgw_com_open(uint8_t cs);
+int lgw_com_open(void *spi);
 
 /**
  *
@@ -117,7 +117,7 @@ void* lgw_com_target(void);
 /**
  *
  **/
-uint8_t lgw_com_cs(void);
+void* lgw_com_spi(void);
 
 #endif
 

@@ -25,6 +25,8 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #include "loragw_spi.h"
 #include "loragw_aux.h"
 
+#include "driver/spi_master.h"
+
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE MACROS ------------------------------------------------------- */
 
@@ -44,15 +46,15 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 /* -------------------------------------------------------------------------- */
 /* --- PRIVATE VARIABLES ---------------------------------------------------- */
-static uint8_t _cs;
+static spi_device_handle_t _spi;
 
 
 /* -------------------------------------------------------------------------- */
 /* --- PUBLIC FUNCTIONS DEFINITION ------------------------------------------ */
 
-int lgw_com_open(uint8_t cs) {
+int lgw_com_open(void *spi) {
     int com_stat;
-    _cs = cs;
+    _spi = *(spi_device_handle_t *)spi;
 
     return LGW_SPI_SUCCESS;
 }
@@ -69,7 +71,7 @@ int lgw_com_close(void) {
 /* Simple write */
 int lgw_com_w(uint8_t spi_mux_target, uint16_t address, uint8_t data) {
     int com_stat;
-    com_stat = lgw_spi_w(spi_mux_target, address, data, _cs);
+    com_stat = lgw_spi_w(spi_mux_target, address, data, &_spi);
     return com_stat;
 }
 
@@ -78,7 +80,7 @@ int lgw_com_w(uint8_t spi_mux_target, uint16_t address, uint8_t data) {
 /* Simple read */
 int lgw_com_r(uint8_t spi_mux_target, uint16_t address, uint8_t *data) {
     int com_stat;
-    com_stat = lgw_spi_r(spi_mux_target, address, data, _cs);
+    com_stat = lgw_spi_r(spi_mux_target, address, data, &_spi);
     return com_stat;
 }
 
@@ -86,7 +88,7 @@ int lgw_com_r(uint8_t spi_mux_target, uint16_t address, uint8_t *data) {
 
 int lgw_com_rmw(uint8_t spi_mux_target, uint16_t address, uint8_t offs, uint8_t leng, uint8_t data) {
     int com_stat;
-    com_stat = lgw_spi_rmw(spi_mux_target, address, offs, leng, data, _cs);
+    com_stat = lgw_spi_rmw(spi_mux_target, address, offs, leng, data, &_spi);
     return com_stat;
 }
 
@@ -95,7 +97,7 @@ int lgw_com_rmw(uint8_t spi_mux_target, uint16_t address, uint8_t offs, uint8_t 
 /* Burst (multiple-byte) write */
 int lgw_com_wb(uint8_t spi_mux_target, uint16_t address, const uint8_t *data, uint16_t size) {
     int com_stat;
-    com_stat = lgw_spi_wb(spi_mux_target, address, data, size, _cs);
+    com_stat = lgw_spi_wb(spi_mux_target, address, data, size, &_spi);
     return com_stat;
 }
 
@@ -104,7 +106,7 @@ int lgw_com_wb(uint8_t spi_mux_target, uint16_t address, const uint8_t *data, ui
 /* Burst (multiple-byte) read */
 int lgw_com_rb(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint16_t size) {
     int com_stat;
-    com_stat = lgw_spi_rb(spi_mux_target, address, data, size, _cs);
+    com_stat = lgw_spi_rb(spi_mux_target, address, data, size, &_spi);
     return com_stat;
 }
 
@@ -135,8 +137,8 @@ int lgw_com_get_temperature(float * temperature) {
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-uint8_t lgw_com_cs() {
-    return _cs;
+void* lgw_com_spi() {
+    return &_spi;
 }
 
 

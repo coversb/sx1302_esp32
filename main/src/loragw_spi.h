@@ -23,6 +23,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 /* --- DEPENDANCIES --------------------------------------------------------- */
 
 #include <stdint.h>        /* C99 types*/
+#include "driver/spi_master.h"
 
 #include "config.h"    /* library configuration options (dynamically generated) */
 
@@ -43,11 +44,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 @param spi_target_ptr pointer on a generic pointer to SPI target (implementation dependant)
 @return status of register operation (LGW_SPI_SUCCESS/LGW_SPI_ERROR)
 */
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-int lgw_spi_w(uint8_t spi_mux_target, uint16_t address, uint8_t data, uint8_t cs);
+int lgw_spi_w(uint8_t spi_mux_target, uint16_t address, uint8_t data, spi_device_handle_t *spi);
 
 /**
 @brief LoRa concentrator SPI single-byte read
@@ -56,7 +53,7 @@ int lgw_spi_w(uint8_t spi_mux_target, uint16_t address, uint8_t data, uint8_t cs
 @param data data byte to write
 @return status of register operation (LGW_SPI_SUCCESS/LGW_SPI_ERROR)
 */
-int lgw_spi_r(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint8_t cs);
+int lgw_spi_r(uint8_t spi_mux_target, uint16_t address, uint8_t *data, spi_device_handle_t *spi);
 
 /**
 @brief LoRa concentrator SPI single-byte read-modify-write
@@ -67,7 +64,7 @@ int lgw_spi_r(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint8_t c
 @param data value to be written in the selected bits
 @return status of register operation (LGW_SPI_SUCCESS/LGW_SPI_ERROR)
 */
-int lgw_spi_rmw(uint8_t spi_mux_target, uint16_t address, uint8_t offs, uint8_t leng, uint8_t data, uint8_t cs);
+int lgw_spi_rmw(uint8_t spi_mux_target, uint16_t address, uint8_t offs, uint8_t leng, uint8_t data, spi_device_handle_t *spi);
 
 /**
 @brief LoRa concentrator SPI burst (multiple-byte) write
@@ -77,7 +74,7 @@ int lgw_spi_rmw(uint8_t spi_mux_target, uint16_t address, uint8_t offs, uint8_t 
 @param size size of the transfer, in byte(s)
 @return status of register operation (LGW_SPI_SUCCESS/LGW_SPI_ERROR)
 */
-int lgw_spi_wb(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint16_t size, uint8_t cs);
+int lgw_spi_wb(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint16_t size, spi_device_handle_t *spi);
 
 /**
 @brief LoRa concentrator SPI burst (multiple-byte) read
@@ -87,16 +84,12 @@ int lgw_spi_wb(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint16_t
 @param size size of the transfer, in byte(s)
 @return status of register operation (LGW_SPI_SUCCESS/LGW_SPI_ERROR)
 */
-int lgw_spi_rb(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint16_t size, uint8_t cs);
+int lgw_spi_rb(uint8_t spi_mux_target, uint16_t address, uint8_t *data, uint16_t size, spi_device_handle_t *spi);
 
 /**
  *
  **/
 uint16_t lgw_spi_chunk_size(void);
-#ifdef __cplusplus
-}
-#endif
 
 #endif
-
 /* --- EOF ------------------------------------------------------------------ */
