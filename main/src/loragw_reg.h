@@ -1437,7 +1437,7 @@ struct lgw_reg_s {
 @param com_path path to the COM device to be used to connect to the SX1302
 @return status of register operation (LGW_REG_SUCCESS/LGW_REG_ERROR)
 */
-int lgw_connect(int cs);
+int lgw_connect(void *spi);
 
 /**
 @brief Disconnect LoRa concentrator by closing COM link

@@ -42,17 +42,17 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 /* -------------------------------------------------------------------------- */
 /* --- PUBLIC FUNCTIONS DEFINITION ------------------------------------------ */
 
-int sx1250_com_w(uint8_t cs, uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size) {
+int sx1250_com_w(void *spi, uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size) {
     int com_stat;
-    com_stat = sx1250_spi_w(spi_mux_target, op_code, data, size, cs);
+    com_stat = sx1250_spi_w(spi_mux_target, op_code, data, size, spi);
     return com_stat;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-int sx1250_com_r(uint8_t cs, uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size) {
+int sx1250_com_r(void *spi, uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size) {
     int com_stat;
-    com_stat = sx1250_spi_r(spi_mux_target, op_code, data, size, cs);
+    com_stat = sx1250_spi_r(spi_mux_target, op_code, data, size, spi);
     return com_stat;
 }
 

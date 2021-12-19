@@ -36,15 +36,10 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 
 /* -------------------------------------------------------------------------- */
 /* --- PUBLIC FUNCTIONS PROTOTYPES ------------------------------------------ */
-#ifdef __cplusplus
-extern "C" {
-#endif
 
-int sx1250_spi_w(uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size, int cs);
-int sx1250_spi_r(uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size, int cs);
-#ifdef __cplusplus
-}
-#endif
+int sx1250_spi_w(uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size, void *spi);
+int sx1250_spi_r(uint8_t spi_mux_target, sx1250_op_code_t op_code, uint8_t *data, uint16_t size, void *spi);
+
 #endif
 
 /* --- EOF ------------------------------------------------------------------ */

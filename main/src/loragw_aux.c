@@ -26,6 +26,7 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 #include <stdio.h>  /* printf fprintf */
 #include <time.h>   /* clock_nanosleep */
 #include <math.h>   /* pow, ceil */
+#include <unistd.h>
 
 #include "loragw_aux.h"
 #include "loragw_hal.h"
@@ -45,15 +46,14 @@ License: Revised BSD License, see LICENSE.TXT file include in the project
 /* --- PUBLIC FUNCTIONS DEFINITION ------------------------------------------ */
 
 void wait_us(unsigned long delay_us) {
-    delayMicroseconds(delay_us);
-
+    usleep(delay_us);
     return;
 }
 
 /* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
 void wait_ms(unsigned long delay_ms) {
-    delay(delay_ms);
+    usleep(delay_ms*1000);
     return;
 }
 

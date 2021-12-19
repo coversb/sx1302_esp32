@@ -1164,12 +1164,12 @@ int reg_r(uint8_t spi_mux_target, struct lgw_reg_s r, int32_t *reg_value) {
 /* --- PUBLIC FUNCTIONS DEFINITION ------------------------------------------ */
 
 /* Concentrator connect */
-int lgw_connect(int cs) {
+int lgw_connect(void *spi) {
     int com_stat = LGW_COM_SUCCESS;
     uint8_t u = 0;
 
     /* open the COM link */
-    com_stat = lgw_com_open(cs);
+    com_stat = lgw_com_open(spi);
     if (com_stat != LGW_COM_SUCCESS) {
         DEBUG_MSG("ERROR CONNECTING CONCENTRATOR\n");
         return LGW_REG_ERROR;
